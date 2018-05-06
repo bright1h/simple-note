@@ -6,16 +6,18 @@ import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+import { Divider } from 'material-ui';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
   },
   paper: {
+    margin : theme.spacing.unit,
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-  },
+},
 });
 
 class Signup extends Component {
@@ -35,7 +37,9 @@ class Signup extends Component {
         const { email, password } = this.state;
         auth.createUserWithEmailAndPassword(email, password)
         .then(authUser => {
-            console.log(authUser);
+            auth.currentUser.sendEmailVerification();
+            alert(authUser);
+
         })
         .catch(authError => {
             alert(authError);
@@ -54,9 +58,11 @@ class Signup extends Component {
         return (
             <div>
                 <Grid container>
-                    <Grid item xs={12}>
+                    <Grid item xs></Grid>
+                    <Grid item xs={12} sm={3}>
                         <Paper className={classes.paper}>
                             <h1>Sign up</h1>
+                            <Divider/>
                             <form onSubmit={this.onSubmit} autoComplete="off">
                                 <TextField
                                   id="email"
@@ -82,6 +88,8 @@ class Signup extends Component {
                             </form>
                         </Paper>
                     </Grid>
+
+                    <Grid item xs></Grid>
                 </Grid>
             </div>
         );
